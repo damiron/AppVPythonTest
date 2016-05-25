@@ -26,6 +26,85 @@ install:
          }
          Write-Output "Succesfully downloaded file [$($localPath)]."
         }
+        
+#function InstallPythonWheel will call pip to install the wheel file $wheelLocalPath
+#If there is a problem installing the file, an Error will be shown and the script will abort.
+  - ps: function InstallPythonWheel{
+        Param ([string]$wheelLocalPath)
+          #update pip to the latest version
+          C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
+          #try to install python wheel using pip
+          C:\Python27\Scripts\pip install $wheelLocalPath
+          #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
+          if($LastExitCode -ne 0)
+          {
+            Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."
+            Exit
+          }
+          else
+          {
+            Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
+          }
+        }
+
+
+#function InstallExe will call Start-Process to install the exe file $exeLocalPath using arguments "/install=agent /silent"
+#If there is a problem installing the file, an Error will be shown and the script will abort.
+  - ps: function InstallExe{
+        Param ([string]$exeLocalPath, [string]$arguments)
+          #try to install an exe file using Start-Process
+          Start-Process -FilePath $exeLocalPath -ArgumentList $arguments -Wait
+          #The return code of Start-Process will be stored in $?, as it was executed trough a powershell commandlet
+          if($?)
+          {
+              Write-Output "Succesfully installed exe file [$($exeLocalPath)]."
+          }
+          else
+          {
+              Write-Error "There was a problem installing the exe file [$($exeLocalPath)]; The script will now terminate."
+              Exit
+          }
+        }
+
+
+#function InstallMsi will call msiexec to install the msi file $msiLocalPath using arguments /i /quiet /qn /norestart /log install.log
+#If there is a problem installing the file, an Error will be shown and the script will abort.
+  - ps: function InstallMsi{
+       Param ([string]$msiLocalPath)
+          #try to install an exe file using mxiexec
+          Start-Process -FilePath msiexec -ArgumentList "/i $($msiLocalPath) /quiet /qn /norestart /log install.log" -Wait
+          #The return code of msiexec will be stored in $?, as it was executed trough a powershell commandlet
+          if($?)
+          {
+              Write-Output "Succesfully installed msi file [$($msiLocalPath)]."
+          }
+          else
+          {
+              Write-Error "There was a problem installing the msi file [$($msiLocalPath)]; The script will now terminate."
+              Exit
+          }
+        }
+
+#function UnzipFile will call 7z to unzip the file $localPath
+#If there is a problem unzipping the file, an Error will be shown and the script will abort.
+  - ps: function UnzipFile{
+        Param ([string]$localPath)
+          #try to unzip file using 7z
+          7z x $localPath -y
+          #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
+          if($LastExitCode -ne 0)
+          {
+              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate."
+              Exit
+          }
+          else
+          {
+              Write-Output "Succesfully unzipped compressed file [$($localPath)]."
+          }
+        }
+        
+#done defining powershell functions. Install logic starts here
+
 #install lxml
   - ps: $url = "https://pypi.python.org/packages/5c/5e/c2d36ed1f234649a9724ceaf8a5ac549cbd51b93a0b524448da46408166d/lxml-3.4.4-cp27-none-win32.whl#md5=21216e68cdbaa82dea9b6907bdc39bed"
   - ps: $localPath = "lxml-3.4.4-cp27-none-win32.whl"
