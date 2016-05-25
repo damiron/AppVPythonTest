@@ -81,15 +81,15 @@ install:
 #If there is a problem unzipping the file, an Error will be shown and the script will abort.
   - ps: function UnzipFile{
         Param ([string]$localPath)
-          7z x $localPath -y
+          7z x $localPath -y`
           if($LastExitCode -ne 0)
           {
-              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate."
-              Exit
+              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate."`
+              Exit`
           }
           else
           {
-              Write-Output "Succesfully unzipped compressed file [$($localPath)]."
+              Write-Output "Succesfully unzipped compressed file [$($localPath)]."`
           }
         }
         
