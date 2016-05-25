@@ -36,15 +36,16 @@ install:
          #try to install python wheel using pip
          #C:\Python27\Scripts\pip install $wheelLocalPath
          #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
-         if($LastExitCode -ne 0)
-         {
-           Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."
-           Exit
-         }
-         else
-         {
-          Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
-         }
+         #if($LastExitCode -ne 0)
+         #{
+           #Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."
+           #Exit
+         #}
+         #else
+         #{
+          #Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
+         #}
+         Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
         }
 
 
