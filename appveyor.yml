@@ -82,14 +82,14 @@ install:
   - ps: function UnzipFile{
         Param ([string]$localPath)
           Start-Process -FilePath 7z -ArgumentList "x $($localPath) -y" -Wait ;
-          if($LastExitCode -ne 0)
+          if($?)
           {
-              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate." ;
-              Exit ;
+              Write-Output "Succesfully unzipped compressed file [$($localPath)]." ;
           }
           else
           {
-              Write-Output "Succesfully unzipped compressed file [$($localPath)]." ;
+              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate." ;
+              Exit ;
           }
         }
         
