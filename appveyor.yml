@@ -157,7 +157,12 @@ configuration: Release
 
 build_script:
 #Adding the needed paths to the PATH environment variable
-  - ps : $env:Path = $env:Path + ";C:\Program Files (x86)\CodeSynthesis XSD 3.3\bin;C:\projects\libxml2-2.7.8.win32\bin;C:\projects\AStyle\bin"
+  #- ps : $env:Path = $env:Path + ";C:\Program Files (x86)\CodeSynthesis XSD 3.3\bin;C:\projects\libxml2-2.7.8.win32\bin;C:\projects\AStyle\bin"
+  - cmd : dir C:\projects\AStyle\bin
+  - cmd : echo %PATH%
+  - cmd : SET PATH=%PATH%;C:\Program Files (x86)\CodeSynthesis XSD 3.3\bin;C:\projects\libxml2-2.7.8.win32\bin;C:\projects\AStyle\bin
+  - cmd : echo %PATH%
+  - cmd : astyle -h
   - ps : start-process -FilePath git -ArgumentList ("clone", "-b backend_open62541 https://github.com/quasar-team/quasar.git") -Wait
   - ps : start-process -FilePath git -ArgumentList ("clone", "https://github.com/quasar-team/quasar-validation-ci.git") -Wait
   
