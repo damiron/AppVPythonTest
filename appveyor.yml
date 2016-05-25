@@ -48,8 +48,8 @@ install:
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallExe{
         Param ([string]$exeLocalPath, [string]$arguments)
-          Start-Process -FilePath $exeLocalPath -ArgumentList $arguments -Wait# try to install an exe file using Start-Process
-          if($?)#The return code of Start-Process will be stored in $?, as it was executed trough a powershell commandlet
+          Start-Process -FilePath $exeLocalPath -ArgumentList $arguments -Wait
+          if($?)
           {
               Write-Output "Succesfully installed exe file [$($exeLocalPath)]."
           }
@@ -65,8 +65,8 @@ install:
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallMsi{
        Param ([string]$msiLocalPath)
-          Start-Process -FilePath msiexec -ArgumentList "/i $($msiLocalPath) /quiet /qn /norestart /log install.log" -Wait# try to install an exe file using mxiexec
-          if($?)# The return code of msiexec will be stored in $?, as it was executed trough a powershell commandlet
+          Start-Process -FilePath msiexec -ArgumentList "/i $($msiLocalPath) /quiet /qn /norestart /log install.log" -Wait
+          if($?)
           {
               Write-Output "Succesfully installed msi file [$($msiLocalPath)]."
           }
@@ -81,8 +81,8 @@ install:
 #If there is a problem unzipping the file, an Error will be shown and the script will abort.
   - ps: function UnzipFile{
         Param ([string]$localPath)
-          7z x $localPath -y# try to unzip file using 7z
-          if($LastExitCode -ne 0)# The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
+          7z x $localPath -y
+          if($LastExitCode -ne 0)
           {
               Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate."
               Exit
