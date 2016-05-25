@@ -41,9 +41,8 @@ install:
          else
          {
           Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
-         }         
+         }
         }
-
 
 #function InstallExe will call Start-Process to install the exe file $exeLocalPath using arguments "/install=agent /silent"
 #If there is a problem installing the file, an Error will be shown and the script will abort.
