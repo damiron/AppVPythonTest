@@ -162,7 +162,7 @@ build_script:
   - ps : start-process -FilePath git -ArgumentList ("clone", "https://github.com/quasar-team/quasar-validation-ci.git") -Wait
   
   #common operations
-  - ps : mv ../saxon9he.jar quasar/Design/ -force
+  - ps : mv saxon9he.jar quasar/Design/ -force
   - ps : mv quasar-validation-ci/CI/Design.xml quasar/Design/ -force
   - ps : mv quasar-validation-ci/CI/config.xml quasar/bin/ -force
   - ps : mv quasar-validation-ci/CI/ServerConfig.xml quasar/bin/ -force
