@@ -158,4 +158,46 @@ platform: x64
 configuration: Release
 
 build_script:
-  - cmd: echo Custo build is possible
+  - ps : start-process -FilePath git -ArgumentList ("clone", "-b backend_open62541 https://github.com/quasar-team/quasar.git") -Wait
+  - ps : start-process -FilePath git -ArgumentList ("clone", "https://github.com/quasar-team/quasar-validation-ci.git") -Wait
+  
+  #common operations
+  - ps : mv ../saxon9he.jar quasar/Design/ -force
+  - ps : mv quasar-validation-ci/CI/Design.xml quasar/Design/ -force
+  - ps : mv quasar-validation-ci/CI/config.xml quasar/bin/ -force
+  - ps : mv quasar-validation-ci/CI/ServerConfig.xml quasar/bin/ -force
+  - ps : mv quasar-validation-ci/CI/shutdown.cpp quasar/Server/src/ -force
+  
+  #open6 specific operations
+  - ps : mkdir quasar/open62541
+  - ps : mkdir quasar/open62541/src
+  - ps : mkdir quasar/open62541/include
+  - ps : mv quasar-validation-ci/CI/open62541CI/open62541folderCMakeLists.txt quasar/open62541/CMakeLists.txt -force
+  - ps : mv quasar-validation-ci/CI/open62541CI/QuasarServer.cpp quasar/Server/src/ -force
+  - ps : mv quasar-validation-ci/CI/open62541WindowsCIConfiguration.cmake quasar/ -force
+  - ps : DownloadFile -url "https://cernbox.cern.ch/index.php/s/RbxN9UP2iWz04ra/download" -localPath "quasar/open62541/src/open62541.c"
+  - ps : DownloadFile -url "https://cernbox.cern.ch/index.php/s/l9jPKvmI4l2CogC/download" -localPath "quasar/open62541/include/open62541.h"
+  
+  - ps : cd quasar
+
+#DownloadFile -url "https://cernbox.cern.ch/index.php/s/n040MuIu1XAYGPG/download" -localPath "manage_files.py"
+#mv manage_files.py FrameworkInternals/ -force
+  - ps : start-process -FilePath git -ArgumentList ("clone", "https://github.com/quasar-team/open62541-compat.git") -Wait
+
+  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device GreenLED" -Wait
+  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device YellowLED" -Wait
+  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device RedLED" -Wait
+
+  - ps : Write-Output "Calling build"
+  - ps : start-process -NoNewWindow -FilePath python -ArgumentList "quasar.py build Release open62541WindowsCIConfiguration.cmake" -Wait -RedirectStandardError "error.log"
+  - ps : Write-Output "Done!"
+  - ps : if(Test-Path bin/OpcUaServer.exe)
+         {
+          Write-Output "Succesfully Built QUASAR." ;
+         }
+         else
+         {
+          Write-Error "There was a problem building QUASAR; The script will now terminate." ;
+          cat error.log ;
+          Exit ;
+         }
