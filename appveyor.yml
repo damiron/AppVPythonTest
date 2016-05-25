@@ -109,13 +109,13 @@ install:
 
 #install AStyle
   - ps: $url = "https://cernbox.cern.ch/index.php/s/MwzEg2vSDNATgTI/download"
-  - ps: $localPath= "astyle.zip"
+  - ps: $localPath= "../astyle.zip"
   - ps: DownloadFile -url $url -localPath $localPath
   - ps: UnzipFile -localPath $localPath
 
 #install libxml2
   - ps: $url = "https://cernbox.cern.ch/index.php/s/0mHSe6TqM6OBBWA/download"
-  - ps: $localPath= "libxml2-2.7.8.win32.zip"
+  - ps: $localPath= "../libxml2-2.7.8.win32.zip"
   - ps: DownloadFile -url $url -localPath $localPath
   - ps: UnzipFile -localPath $localPath
 
