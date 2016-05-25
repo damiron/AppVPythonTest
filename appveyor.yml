@@ -17,30 +17,30 @@ install:
          Param ([string]$url,[string]$localPath)
          try 
          {
-          Invoke-WebRequest $url -OutFile $localPath`
+          Invoke-WebRequest $url -OutFile $localPath ;
          }
          catch
          {
-          Write-Error "There was a problem donwloading the url [$($url)]; The script will now terminate."`
-          Exit`
+          Write-Error "There was a problem donwloading the url [$($url)]; The script will now terminate." ;
+          Exit ;
          }
-         Write-Output "Succesfully downloaded file [$($localPath)]."`
+         Write-Output "Succesfully downloaded file [$($localPath)]." ;
         }
         
 #function InstallPythonWheel will call pip to install the wheel file $wheelLocalPath
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallPythonWheel{
          Param ([string]$wheelLocalPath)
-         C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip`
-         C:\Python27\Scripts\pip install $wheelLocalPath`
+         C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip ;
+         C:\Python27\Scripts\pip install $wheelLocalPath ;
          if($LastExitCode -ne 0)
          {
-          Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."`
-          Exit`
+          Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate." ;
+          Exit ;
          }
          else
          {
-          Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."`
+          Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]." ;
          }
         }
 
@@ -48,15 +48,15 @@ install:
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallExe{
         Param ([string]$exeLocalPath, [string]$arguments)
-          Start-Process -FilePath $exeLocalPath -ArgumentList $arguments -Wait`
+          Start-Process -FilePath $exeLocalPath -ArgumentList $arguments -Wait ;
           if($?)
           {
-              Write-Output "Succesfully installed exe file [$($exeLocalPath)]."`
+              Write-Output "Succesfully installed exe file [$($exeLocalPath)]." ;
           }
           else
           {
-              Write-Error "There was a problem installing the exe file [$($exeLocalPath)]; The script will now terminate."`
-              Exit
+              Write-Error "There was a problem installing the exe file [$($exeLocalPath)]; The script will now terminate." ;
+              Exit ;
           }
         }
 
@@ -65,15 +65,15 @@ install:
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallMsi{
        Param ([string]$msiLocalPath)
-          Start-Process -FilePath msiexec -ArgumentList "/i $($msiLocalPath) /quiet /qn /norestart /log install.log" -Wait`
+          Start-Process -FilePath msiexec -ArgumentList "/i $($msiLocalPath) /quiet /qn /norestart /log install.log" -Wait ;
           if($?)
           {
-              Write-Output "Succesfully installed msi file [$($msiLocalPath)]."`
+              Write-Output "Succesfully installed msi file [$($msiLocalPath)]." ;
           }
           else
           {
-              Write-Error "There was a problem installing the msi file [$($msiLocalPath)]; The script will now terminate."`
-              Exit`
+              Write-Error "There was a problem installing the msi file [$($msiLocalPath)]; The script will now terminate." ;
+              Exit ;
           }
         }
 
@@ -81,15 +81,15 @@ install:
 #If there is a problem unzipping the file, an Error will be shown and the script will abort.
   - ps: function UnzipFile{
         Param ([string]$localPath)
-          Start-Process -FilePath 7z -ArgumentList "x $($localPath) -y" -Wait`
+          Start-Process -FilePath 7z -ArgumentList "x $($localPath) -y" -Wait ;
           if($LastExitCode -ne 0)
           {
-              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate."`
-              Exit`
+              Write-Error "There was a problem unzipping the compressed file [$($localPath)]; The script will now terminate." ;
+              Exit ;
           }
           else
           {
-              Write-Output "Succesfully unzipped compressed file [$($localPath)]."`
+              Write-Output "Succesfully unzipped compressed file [$($localPath)]." ;
           }
         }
         
