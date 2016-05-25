@@ -24,4 +24,4 @@ platform: x64
 configuration: Release
 
 build:
-  echo Custo build is possible
+  - cmd: echo Custo build is possible
