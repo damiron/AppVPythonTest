@@ -99,6 +99,7 @@ install:
   - ps: $url = "https://pypi.python.org/packages/5c/5e/c2d36ed1f234649a9724ceaf8a5ac549cbd51b93a0b524448da46408166d/lxml-3.4.4-cp27-none-win32.whl#md5=21216e68cdbaa82dea9b6907bdc39bed"
   - ps: $localPath = "lxml-3.4.4-cp27-none-win32.whl"
   - ps: DownloadFile -url $url -localPath $localPath
+  - ps: InstallPythonWheel -wheelLocalPath $localPath
   
 #install pysvn
   - ps: $url = "https://cernbox.cern.ch/index.php/s/CFxkAy38E8C8ipA/download"
