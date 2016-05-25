@@ -23,5 +23,5 @@ platform: x64
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
-build:
+build_script:
   - cmd: echo Custo build is possible
