@@ -30,7 +30,7 @@ install:
 #function InstallPythonWheel will call pip to install the wheel file $wheelLocalPath
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallPythonWheel{
-         Param ([string]$wheelLocalPath)
+          Param ([string]$wheelLocalPath)
          #update pip to the latest version
          #C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
          #try to install python wheel using pip
@@ -45,7 +45,7 @@ install:
          #{
           #Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
          #}
-         Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
+          Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
         }
 
 
