@@ -80,8 +80,8 @@ install:
 #function UnzipFile will call 7z to unzip the file $localPath
 #If there is a problem unzipping the file, an Error will be shown and the script will abort.
   - ps: function UnzipFile{
-        Param ([string]$localPath, [string]$outputPath)
-          Start-Process -FilePath 7z -ArgumentList "x $($localPath) -o $($outputPath) -y" -Wait ;
+        Param ([string]$localPath)
+          Start-Process -FilePath 7z -ArgumentList "x $($localPath) -y" -Wait ;
           if($?)
           {
               Write-Output "Succesfully unzipped compressed file [$($localPath)]." ;
@@ -108,18 +108,18 @@ install:
   - ps: InstallExe -exeLocalPath $localPath -arguments "/install=agent /silent"
 
 #install AStyle
+  - ps: cd ..
   - ps: $url = "https://cernbox.cern.ch/index.php/s/MwzEg2vSDNATgTI/download"
-  - ps: $localPath= "../astyle.zip"
-  - ps: $outputPath= ".."
+  - ps: $localPath= "astyle.zip"
   - ps: DownloadFile -url $url -localPath $localPath
   - ps: UnzipFile -localPath $localPath -outputPath $outputPath
 
 #install libxml2
   - ps: $url = "https://cernbox.cern.ch/index.php/s/0mHSe6TqM6OBBWA/download"
-  - ps: $localPath= "../libxml2-2.7.8.win32.zip"
+  - ps: $localPath= "libxml2-2.7.8.win32.zip"
   - ps: DownloadFile -url $url -localPath $localPath
-  - ps: $outputPath= ".."
   - ps: UnzipFile -localPath $localPath -outputPath $outputPath
+  - ps: cd AppVPythonTest
 
 #install xsdcxx and change exe name
   - ps: $url = "http://www.codesynthesis.com/download/xsd/3.3/windows/i686/xsd-3.3.msi"
