@@ -185,20 +185,24 @@ build_script:
 #mv manage_files.py FrameworkInternals/ -force
   - ps : start-process -FilePath git -ArgumentList ("clone", "https://github.com/quasar-team/open62541-compat.git") -Wait
 
-  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device GreenLED" -Wait
-  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device YellowLED" -Wait
-  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device RedLED" -Wait
-
+#  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device GreenLED" -Wait
+#  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device YellowLED" -Wait
+#  - ps : start-process -NoNewWindow -FilePath python  -ArgumentList "quasar.py generate device RedLED" -Wait
+  - cmd : python quasar.py generate device GreenLED
+  - cmd : python quasar.py generate device YellowLED
+  - cmd : python quasar.py generate device RedLED
+  
   - ps : Write-Output "Calling build"
-  - ps : start-process -NoNewWindow -FilePath python -ArgumentList "quasar.py build Release open62541WindowsCIConfiguration.cmake" -Wait -RedirectStandardError "error.log"
-  - ps : Write-Output "Done!"
-  - ps : if(Test-Path bin/OpcUaServer.exe)
-         {
-          Write-Output "Succesfully Built QUASAR." ;
-         }
-         else
-         {
-          Write-Error "There was a problem building QUASAR; The script will now terminate." ;
-          cat error.log ;
-          Exit ;
-         }
+  - cmd : python quasar.py build Release open62541WindowsCIConfiguration.cmake
+#  - ps : start-process -NoNewWindow -FilePath python -ArgumentList "quasar.py build Release open62541WindowsCIConfiguration.cmake" -Wait -RedirectStandardError "error.log"
+#  - ps : Write-Output "Done!"
+#  - ps : if(Test-Path bin/OpcUaServer.exe)
+#         {
+#          Write-Output "Succesfully Built QUASAR." ;
+#         }
+#         else
+#         {
+#          Write-Error "There was a problem building QUASAR; The script will now terminate." ;
+#          cat error.log ;
+#          Exit ;
+#         }
