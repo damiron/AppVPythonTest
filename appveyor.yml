@@ -94,6 +94,7 @@ install:
         }
         
 #done defining powershell functions. Install logic starts here
+  - ps: cd ..
 
 #install lxml
   - ps: $url = "https://pypi.python.org/packages/5c/5e/c2d36ed1f234649a9724ceaf8a5ac549cbd51b93a0b524448da46408166d/lxml-3.4.4-cp27-none-win32.whl#md5=21216e68cdbaa82dea9b6907bdc39bed"
@@ -108,7 +109,6 @@ install:
   - ps: InstallExe -exeLocalPath $localPath -arguments "/install=agent /silent"
 
 #install AStyle
-  - ps: cd ..
   - ps: $url = "https://cernbox.cern.ch/index.php/s/MwzEg2vSDNATgTI/download"
   - ps: $localPath= "astyle.zip"
   - ps: DownloadFile -url $url -localPath $localPath
@@ -119,7 +119,6 @@ install:
   - ps: $localPath= "libxml2-2.7.8.win32.zip"
   - ps: DownloadFile -url $url -localPath $localPath
   - ps: UnzipFile -localPath $localPath -outputPath $outputPath
-  - ps: cd AppVPythonTest
 
 #install xsdcxx and change exe name
   - ps: $url = "http://www.codesynthesis.com/download/xsd/3.3/windows/i686/xsd-3.3.msi"
@@ -151,6 +150,7 @@ install:
   - ps: $localPath = "saxon9he.jar"
   - ps: DownloadFile -url $url -localPath $localPath
   
+  - ps: cd AppVPythonTest
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform: x64
 
