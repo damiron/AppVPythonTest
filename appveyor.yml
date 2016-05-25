@@ -9,6 +9,28 @@ os: Windows Server 2012
 
 # scripts that run after cloning repository
 install:
+#define functions that will be used later
+
+#function DownloadFile will download a file from the given $url and will put it in the given $localPath
+#If there is a problem downloading the file, an Error will be shown and the script will abort.
+  - ps: function DownloadFile{
+     Param ([string]$url,[string]$localPath)
+     try 
+     {
+       Invoke-WebRequest $url -OutFile $localPath
+     }
+     catch
+     {
+      Write-Error "There was a problem donwloading the url [$($url)]; The script will now terminate."
+      Exit
+     }
+     Write-Output "Succesfully downloaded file [$($localPath)]."
+   }
+#install lxml
+  - ps: $url = "https://pypi.python.org/packages/5c/5e/c2d36ed1f234649a9724ceaf8a5ac549cbd51b93a0b524448da46408166d/lxml-3.4.4-cp27-none-win32.whl#md5=21216e68cdbaa82dea9b6907bdc39bed"
+  - ps: $localPath = "lxml-3.4.4-cp27-none-win32.whl"
+  - ps: DownloadFile -url $url -localPath $localPath
+  
   # by default, all script lines are interpreted as batch
   - echo This is batch
   # to run script as a PowerShell command prepend it with ps:
