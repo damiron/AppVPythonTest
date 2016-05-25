@@ -30,21 +30,21 @@ install:
 #function InstallPythonWheel will call pip to install the wheel file $wheelLocalPath
 #If there is a problem installing the file, an Error will be shown and the script will abort.
   - ps: function InstallPythonWheel{
-        Param ([string]$wheelLocalPath)
-        #update pip to the latest version
-        #C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
-        #try to install python wheel using pip
-        #C:\Python27\Scripts\pip install $wheelLocalPath
-        #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
-        if($LastExitCode -ne 0)
-        {
-          Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."
-          Exit
-        }
-        else
-        {
-          Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
-        }
+          Param ([string]$wheelLocalPath)
+          #update pip to the latest version
+          C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
+          #try to install python wheel using pip
+          C:\Python27\Scripts\pip install $wheelLocalPath
+          #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
+          if($LastExitCode -ne 0)
+          {
+            Write-Error "There was a problem installing the python wheel file [$($wheelLocalPath)]; The script will now terminate."
+            Exit
+          }
+          else
+          {
+            Write-Output "Succesfully installed python wheel file [$($wheelLocalPath)]."
+          }
         }
 
 
