@@ -32,9 +32,9 @@ install:
   - ps: function InstallPythonWheel{
         Param ([string]$wheelLocalPath)
         #update pip to the latest version
-        C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
+        #C:\Python27\Scripts\pip install --disable-pip-version-check --user --upgrade pip
         #try to install python wheel using pip
-        C:\Python27\Scripts\pip install $wheelLocalPath
+        #C:\Python27\Scripts\pip install $wheelLocalPath
         #The return code of pip will be stored in $LastExitCode, as it is not executed trough a powershell commandlet
         if($LastExitCode -ne 0)
         {
